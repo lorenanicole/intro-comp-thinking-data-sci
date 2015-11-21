@@ -20,7 +20,7 @@ def noReplacementSimulation(numTrials):
     threeSameColorPicked = 0
     
     for i in range(numTrials):
-	   if pickBalls(3):
+        if pickBalls(3):
             threeSameColorPicked += 1
 
     return float(threeSameColorPicked) / numTrials
