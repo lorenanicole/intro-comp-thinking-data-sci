@@ -9,23 +9,23 @@ Write a Monte Carlo simulation to solve the above problem.
 
 import random
 
-def noReplacementSimulation(numTrials):
+def noReplacementSimulation(numTrials, pickBallsFct):
     '''
     Runs numTrials trials of a Monte Carlo simulation
     of drawing 3 balls out of a bucket containing
-    3 red and 3 green balls. Balls are not replaced once
+    X red and X green balls. Balls are not replaced once
     drawn. Returns a decimal - the fraction of times 3 
     balls of the same color were drawn.
     '''
     threeSameColorPicked = 0
     
     for i in range(numTrials):
-        if pickBalls(3):
+        if pickBallsFct(3):
             threeSameColorPicked += 1
 
     return float(threeSameColorPicked) / numTrials
 
-def pickBalls(numBallsToPick):
+def pickBallsFromSix(numBallsToPick):
 
     options = ["red", "red", "red", "green", "green", "green"]
     choices = []
@@ -37,7 +37,7 @@ def pickBalls(numBallsToPick):
 
     return choices == ["red", "red", "red"] or choices == ["green", "green", "green"]
 
-print noReplacementSimulation(1000000)
+# print noReplacementSimulation(1000000)
 
 """
 Probability of pulling three of either color explained:
@@ -61,3 +61,18 @@ def pickingThreeSameColor(numTrials):
         if random.random() < 0.1:
             pickedThree += 1
     return float(pickedThree) / numTrials 
+
+
+def pickBallsFromEight(numBallsToPick):
+
+    options = ["red", "red", "red", "red", "green", "green", "green", "green"]
+    choices = []
+
+    for i in range(numBallsToPick):
+        choice = random.choice(options)
+        choices.append(choice)
+        options.remove(choice)
+
+    return choices == ["red", "red", "red"] or choices == ["green", "green", "green"]
+
+print noReplacementSimulation(1000000, pickBallsFromEight)
