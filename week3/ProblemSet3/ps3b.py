@@ -266,7 +266,7 @@ class ResistantVirus(SimpleVirus):
         otherwise.
         """
         
-        return self.resistances[drug]
+        return self.resistances.get(drug,False)
 
 
     def reproduce(self, popDensity, activeDrugs):
@@ -486,7 +486,6 @@ def simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances,
     pylab.show()
 
 simulationWithDrug(100, 1000, 0.1, 0.05, {'guttagonol': False}, 0.005, 100)
-
 
 # virus1 = ResistantVirus(1.0, 0.0, {"drug1": True}, 0.0)
 # virus2 = ResistantVirus(1.0, 0.0, {"drug1": False, "drug2": True}, 0.0)
