@@ -393,9 +393,9 @@ class TreatedPatient(Patient):
         """
         resistantPop = 0
         for virus in self.getViruses():
-            for drug in drugResist:
-                if False not in virus.getResistances().values():
-                    resistantPop += 1
+            resistances = map(lambda drug: virus.getResistances().get(drug, False), drugResist)
+            if False not in resistances:
+                resistantPop += 1        
         return resistantPop
 
     def update(self):
@@ -486,3 +486,16 @@ def simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances,
     pylab.show()
 
 simulationWithDrug(100, 1000, 0.1, 0.05, {'guttagonol': False}, 0.005, 100)
+
+
+# virus1 = ResistantVirus(1.0, 0.0, {"drug1": True}, 0.0)
+# virus2 = ResistantVirus(1.0, 0.0, {"drug1": False, "drug2": True}, 0.0)
+# virus3 = ResistantVirus(1.0, 0.0, {"drug1": True, "drug2": True}, 0.0)
+# patient = TreatedPatient([virus1, virus2, virus3], 100)
+# patient.getResistPop(['drug1']) #: 2
+# patient.getResistPop(['drug2']) #: 2
+# patient.getResistPop(['drug1','drug2']) #: 1
+# patient.getResistPop(['drug3']) #: 0
+# patient.getResistPop(['drug1', 'drug3']) #: 0
+# patient.getResistPop(['drug1','drug2', 'drug3']) #: 0
+
