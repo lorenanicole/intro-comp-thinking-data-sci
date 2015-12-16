@@ -8,7 +8,7 @@ from ps3b import *
 #
 # PROBLEM 1
 #        
-def simulationDelayedTreatment(numTrials):
+def simulationDelayedTreatment(numTrials, condition=75):
     """
     Runs simulations and make histograms for problem 1.
 
@@ -22,11 +22,26 @@ def simulationDelayedTreatment(numTrials):
     numTrials: number of simulation runs to execute (an integer)
     """
     
-    # TODO
+    trialResults = {trialNum: 0 for trialNum in range(numTrials)}
+    for trial in range(numTrials):
+        viruses = [ResistantVirus(0.1, 0.05, {'guttagonol': False}, 0.005) for x in range(100)]
+        treatedPatient = TreatedPatient(viruses, 1000)
+        for timeStep in range(0,condition+150):
+            treatedPatient.update()
+            if timeStep == condition:
+                treatedPatient.addPrescription('guttagonol')
+        print str(trial) + " Completed"
+        trialResults[trial] = treatedPatient.update()
+    print trialResults
+    pylab.hist(trialResults.values(), bins=20)
+    pylab.title("Final Resistant Population - Prescription Given After " + str(condition) + " Time Steps for " + str(numTrials) + " Trials")
+    pylab.xlabel("Final Total Virus Population")
+    pylab.ylabel("Number of Trials")
+    pylab.legend(loc='best')
+    pylab.show()
 
 
-
-
+simulationDelayedTreatment(2000, 300)
 
 
 #
@@ -46,3 +61,13 @@ def simulationTwoDrugsDelayedTreatment(numTrials):
     numTrials: number of simulation runs to execute (an integer)
     """
     # TODO
+
+# 300 
+# 175
+# 75
+#  0 time steps before administering the drug
+#  TreatedPatient(viruses, maxPop):
+# patient = 
+
+
+
